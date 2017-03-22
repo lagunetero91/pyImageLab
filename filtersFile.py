@@ -24,7 +24,7 @@ def aplyColor(image,color):
 				image.putpixel((i,j),((int)(nr+(255-nr)*(media-128)/128),(int)(ng+(255-ng)*(media-128)/128),(int)(nb+(255-nb)*(media-128)/128)))
 	return image
 
-
+# Transforma imágen RGB a HSV
 def rgb2hsvImage(image):
     width, height = image.size
     for i in range(width):
@@ -34,6 +34,7 @@ def rgb2hsvImage(image):
             image.putpixel((i,j),((int)(h),(int)(s),(int)(v)))
     return image
 
+#Convertir pixel RGB a HSV
 def rgb2hsvPixel(r,g,b):
     mx = max(r,g,b)
     mn = min(r,g,b)
