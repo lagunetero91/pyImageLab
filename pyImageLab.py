@@ -41,16 +41,14 @@ def aplyFilter():
     filter = tkvar.get()
     if filter == 'Invertir color' :
         showIm = ImageOps.invert(auxiliarImg)
-        refreshImages(showIm,panel2)
     elif filter == 'Normal':
         showIm =copy(acI)
-        refreshImages(showIm,panel2)
     elif filter == 'Escala de grises':
         showIm = acI.convert("L")
-        refreshImages(showIm,panel2)
     elif filter == 'Negativo':
         showIm = negativeImage(auxiliarImg)
-        refreshImages(showIm,panel2)
+    outI=copy(showIm)
+    refreshImages(showIm,panel2)
 
 
 #Método que recoge el color especificado en el botón.
@@ -65,11 +63,11 @@ def aplyColorFilter():
     global outI
     showImg = copy(acI)
     showImg = aplyColor(showImg,color)
+    outI=copy(showImg)
     refreshImages(showImg,panel2)
 
 #Método que refresca miniaturas.   
 def refreshImages(newMiniatureImage,panel):
-    outI=copy(newMiniatureImage)
     newMiniatureImage.thumbnail(size, Image.ANTIALIAS)
     tkimageout = ImageTk.PhotoImage(newMiniatureImage)			#Mostrar imagen
     panel.configure(image = tkimageout)
