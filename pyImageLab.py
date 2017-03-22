@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 from filtersFile import*
 import os, sys
 from tkinter import*
@@ -64,7 +66,8 @@ def aplyColorFilter():
     showImg = copy(acI)
     showImg = aplyColor(showImg,color)
     refreshImages(showImg,panel2)
-    
+
+#Método que refresca miniaturas.   
 def refreshImages(newMiniatureImage,panel):
     outI=copy(newMiniatureImage)
     newMiniatureImage.thumbnail(size, Image.ANTIALIAS)

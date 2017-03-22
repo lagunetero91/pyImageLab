@@ -1,4 +1,4 @@
-
+# -*- encoding: utf-8 -*-
 
 #Método que pone la imágen en negativo.       
 def negativeImage(aux):
