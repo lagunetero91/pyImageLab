@@ -23,3 +23,35 @@ def aplyColor(image,color):
 			else:
 				image.putpixel((i,j),((int)(nr+(255-nr)*(media-128)/128),(int)(ng+(255-ng)*(media-128)/128),(int)(nb+(255-nb)*(media-128)/128)))
 	return image
+
+
+def rgb2hsvImage(image):
+    width, height = image.size
+    for i in range(width):
+        for j in range(height):
+            r,g,b = image.getpixel((i,j))
+            h,s,v = rgb2hsvPixel(r,g,b)
+            image.putpixel((i,j),((int)(h),(int)(s),(int)(v)))
+    return image
+
+def rgb2hsvPixel(r,g,b):
+    mx = max(r,g,b)
+    mn = min(r,g,b)
+    df = mx - mn
+    if mx == mn :
+        h=0
+    elif mx == r:
+        h = 60*(((g-b)/df)+360)
+    elif mx == g:
+        h = 60*(((b-r)/df)+120)
+    elif mx == b:
+        h = 60*(((r-g)/df)+240)
+
+    if mx == 0:
+        s = 0
+    else:
+        s = 1 - mn/mx
+
+    v = mx
+    return v,h,s
+    print("hola")

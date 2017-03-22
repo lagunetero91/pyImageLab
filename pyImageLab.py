@@ -5,6 +5,7 @@ import os, sys
 from tkinter import*
 import tkinter.filedialog
 import tkinter.colorchooser
+import math
 from copy import copy
 from PIL import Image, ImageTk,ImageFilter,ImageOps
 
@@ -47,6 +48,7 @@ def aplyFilter():
         showIm = acI.convert("L")
     elif filter == 'Negativo':
         showIm = negativeImage(auxiliarImg)
+        #showIm = rgb2hsvImage(auxiliarImg)
     outI=copy(showIm)
     refreshImages(showIm,panel2)
 
