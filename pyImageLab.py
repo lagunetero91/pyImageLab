@@ -8,7 +8,7 @@ import tkinter.colorchooser
 import math
 from copy import copy
 from PIL import Image, ImageTk,ImageFilter,ImageOps
-
+      
 
 window_size= "640x480"      #Tamaño de la ventana del programa.
 size = 256, 256             #Tamaño de las miniaturas de las imágenes.
@@ -21,36 +21,36 @@ tkvar.set('Invertir color')
 
 # Método que se utiliza para cargar una imagen al programa.
 def chooseImage():
-    global acI
+    global actlmage
     filename =tkinter.filedialog.askopenfilename()
     inImage2 = Image.open(filename)				#Abrir Imagen
-    acI = copy(inImage2)
-    refreshImages(inImage2,panel)
+    actlmage = copy(inImage2)
+    refreshImages(inImage2,inMiniaturePanel)
    
 #Método encargado de guardar la imagen procesada.
 def saveImage():
-    global outI
+    global outImage
     savefile = tkinter.filedialog.asksaveasfile(mode='w',defaultextension=".jpg")
     if savefile:    #Comprueba si se le dío a cancelar.
-        outI.save(savefile)
+        outImage.save(savefile)
 
 #Método encargado de aplicar los filtros.
 def aplyFilter():
-    global acI
-    global outI
-    auxiliarImg = copy(acI)
+    global actlmage
+    global outImage
+    auxiliarImg = copy(actlmage)
     filter = tkvar.get()
     if filter == 'Invertir color' :
         showIm = ImageOps.invert(auxiliarImg)
     elif filter == 'Normal':
-        showIm =copy(acI)
+        showIm =copy(actlmage)
     elif filter == 'Escala de grises':
-        showIm = acI.convert("L")
+        showIm = actlmage.convert("L")
     elif filter == 'Negativo':
         showIm = negativeImage(auxiliarImg)
         #showIm = rgb2hsvImage(auxiliarImg)
-    outI=copy(showIm)
-    refreshImages(showIm,panel2)
+    outImage=copy(showIm)
+    refreshImages(showIm,outMiniaturePanel)
 
 
 #Método que recoge el color especificado en el botón.
@@ -61,12 +61,12 @@ def getColor():
 
 def aplyColorFilter():
     global color
-    global acI
-    global outI
-    showImg = copy(acI)
+    global actlmage
+    global outImage
+    showImg = copy(actlmage)
     showImg = aplyColor(showImg,color)
-    outI=copy(showImg)
-    refreshImages(showImg,panel2)
+    outImage=copy(showImg)
+    refreshImages(showImg,outMiniaturePanel)
 
 #Método que refresca miniaturas.   
 def refreshImages(newMiniatureImage,panel):
@@ -80,18 +80,18 @@ root.geometry(window_size)
 window = tkinter.Frame(root)
 window.pack()
 inImage = Image.open("Imagenes/intro.jpg")                      #Abrir Imagen por defecto de la entrada.
-acI = copy(inImage)
-outI = copy(inImage)
+actlmage = copy(inImage)
+outImage = copy(inImage)
 inImage.thumbnail(size, Image.ANTIALIAS)		#Cambia el tamaño de la imagen
 tkimage = ImageTk.PhotoImage(inImage)			#Mostrar imagen
-panel = tkinter.Label(window, image=tkimage,width=256,height=256)
-panel.grid(row=0)
+inMiniaturePanel = tkinter.Label(window, image=tkimage,width=256,height=256)
+inMiniaturePanel.grid(row=0)
 
 outputimage = Image.open("Imagenes/result.jpg")			#Abrir Imagen por defecto de la salida.
 outputimage.thumbnail(size, Image.ANTIALIAS)		#Cambia el tamaño de la imagen
 tkimageout = ImageTk.PhotoImage(outputimage)
-panel2 = tkinter.Label(window, image=tkimageout,width=256,height=256)
-panel2.grid(row=0,column=2)
+outMiniaturePanel = tkinter.Label(window, image=tkimageout,width=256,height=256)
+outMiniaturePanel.grid(row=0,column=2)
 
 chooseButton = tkinter.Button(window,text="Selecionar Imagen",command=chooseImage).grid(row=1,column=0,pady=8)      #Botón de carga de imágenes
 saveButton = tkinter.Button(window,text="Guadar Imagen",command=saveImage).grid(row=1,column=2)                     #Botón para guardar imágenes
