@@ -51,7 +51,7 @@ def aplyFilter():
     elif filter == 'Negativo':
         #showIm = negativeImage(auxiliarImg)
         #showIm = rgb2hsvImage(auxiliarImg)
-        showIm = imageInverter(auxiliarImg)
+        showIm = smoke(auxiliarImg)
     outImage=copy(showIm)
     refreshImages(showIm,outMiniaturePanel)
 

@@ -88,3 +88,15 @@ def imageDuplicater(image):
     return image
 
 #Add Chili
+
+
+
+# Transforma imágen RGB a HSV
+def smoke(image):
+    width, height = image.size
+    for i in range(width):
+        for j in range(height):
+            if j%4 == 0:
+                r,g,b = image.getpixel((i,j))
+                image.putpixel((i,j),(208,208,208))
+    return image
