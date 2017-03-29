@@ -73,3 +73,14 @@ def imageInverter(image):
             r,g,b = aux.getpixel((i,j))
             image.putpixel(((width-1)-i,j),(r,g,b))
     return image
+
+
+def imageDuplicater(image):
+    aux = copy(image)
+    width, height = image.size
+    for i in range(width):
+        for j in range(height):
+            if i%2 == 1:
+                r,g,b = aux.getpixel((i,j))
+                image.putpixel(((width-1)-i,j),(r,g,b))
+    return image
