@@ -56,6 +56,7 @@ def rgb2hsvPixel(r,g,b):
     v = mx
     return v,h,s
 
+#
 def imageGyro(image):
     aux = copy(image)
     width, height = image.size
@@ -65,6 +66,7 @@ def imageGyro(image):
             image.putpixel((i,(height-1)-j),(r,g,b))
     return image
 
+#Image Inverter
 def imageInverter(image):
     aux = copy(image)
     width, height = image.size
@@ -74,7 +76,7 @@ def imageInverter(image):
             image.putpixel(((width-1)-i,j),(r,g,b))
     return image
 
-
+#Image Duplicater
 def imageDuplicater(image):
     aux = copy(image)
     width, height = image.size
@@ -84,3 +86,5 @@ def imageDuplicater(image):
                 r,g,b = aux.getpixel((i,j))
                 image.putpixel(((width-1)-i,j),(r,g,b))
     return image
+
+#Add Chili
