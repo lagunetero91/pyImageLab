@@ -49,8 +49,9 @@ def aplyFilter():
     elif filter == 'Escala de grises':
         showIm = actlmage.convert("L")
     elif filter == 'Negativo':
-        showIm = negativeImage(auxiliarImg)
+        #showIm = negativeImage(auxiliarImg)
         #showIm = rgb2hsvImage(auxiliarImg)
+        showIm = imageInverter(auxiliarImg)
     outImage=copy(showIm)
     refreshImages(showIm,outMiniaturePanel)
 

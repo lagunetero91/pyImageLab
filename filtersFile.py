@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-
+from copy import copy
 #Método que pone la imágen en negativo.       
 def negativeImage(aux):
     width, height = aux.size
@@ -55,4 +55,21 @@ def rgb2hsvPixel(r,g,b):
 
     v = mx
     return v,h,s
-    print("hola")
+
+def imageGyro(image):
+    aux = copy(image)
+    width, height = image.size
+    for i in range(width):
+        for j in range(height):
+            r,g,b = aux.getpixel((i,j))
+            image.putpixel((i,(height-1)-j),(r,g,b))
+    return image
+
+def imageInverter(image):
+    aux = copy(image)
+    width, height = image.size
+    for i in range(width):
+        for j in range(height):
+            r,g,b = aux.getpixel((i,j))
+            image.putpixel(((width-1)-i,j),(r,g,b))
+    return image
