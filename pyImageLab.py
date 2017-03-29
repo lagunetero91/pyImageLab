@@ -8,6 +8,8 @@ import tkinter.colorchooser
 import math
 from copy import copy
 from PIL import Image, ImageTk,ImageFilter,ImageOps
+import _thread
+from threading import Thread
       
 
 window_size= "640x480"      #Tamaño de la ventana del programa.
@@ -64,7 +66,10 @@ def aplyColorFilter():
     global actlmage
     global outImage
     showImg = copy(actlmage)
-    showImg = aplyColor(showImg,color)
+    id = Thread(target=aplyColor,args=(showImg,color,))
+    id.start()
+    id.join()
+    #showImg = aplyColor(showImg,color)
     outImage=copy(showImg)
     refreshImages(showImg,outMiniaturePanel)
 
