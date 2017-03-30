@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from filtersFile import*
+from operationsFile import*
 import os, sys
 from tkinter import*
 import tkinter.filedialog

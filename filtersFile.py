@@ -56,42 +56,13 @@ def rgb2hsvPixel(r,g,b):
     v = mx
     return v,h,s
 
-#
-def imageGyro(image):
-    aux = copy(image)
-    width, height = image.size
-    for i in range(width):
-        for j in range(height):
-            r,g,b = aux.getpixel((i,j))
-            image.putpixel((i,(height-1)-j),(r,g,b))
-    return image
 
-#Image Inverter
-def imageInverter(image):
-    aux = copy(image)
-    width, height = image.size
-    for i in range(width):
-        for j in range(height):
-            r,g,b = aux.getpixel((i,j))
-            image.putpixel(((width-1)-i,j),(r,g,b))
-    return image
-
-#Image Duplicater
-def imageDuplicater(image):
-    aux = copy(image)
-    width, height = image.size
-    for i in range(width):
-        for j in range(height):
-            if i%2 == 1:
-                r,g,b = aux.getpixel((i,j))
-                image.putpixel(((width-1)-i,j),(r,g,b))
-    return image
 
 #Add Chili
 
 
 
-# Transforma imágen RGB a HSV
+# Efecto humo ( no va bien)
 def smoke(image):
     width, height = image.size
     for i in range(width):
