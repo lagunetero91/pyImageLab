@@ -17,73 +17,78 @@ window_size= "640x480"      #Tamaño de la ventana del programa.
 size = 256, 256             #Tamaño de las miniaturas de las imágenes.
 color = "grey"
 filters = {'Invertir color', 'Normal','Escala de grises','Negativo'}      #ComboBox: Filtros
-root = tkinter.Tk()
-root.title("pyImageLab")
+
+
+class App(tkinter.Frame):
+    def __init__(self,master=None):
+        super().__init__(master)
+        self.pack()
+        
+    # Método que se utiliza para cargar una imagen al programa.
+    def chooseImage():
+        global actlmage
+        filename =tkinter.filedialog.askopenfilename()
+        inImage2 = Image.open(filename)				#Abrir Imagen
+        actlmage = copy(inImage2)
+        refreshImages(inImage2,inMiniaturePanel)
+   
+    #Método encargado de guardar la imagen procesada.
+    def saveImage():
+        global outImage
+        savefile = tkinter.filedialog.asksaveasfile(mode='w',defaultextension=".jpg")
+        if savefile:    #Comprueba si se le dío a cancelar.
+            outImage.save(savefile)
+
+    #Método encargado de aplicar los filtros.
+    def aplyFilter():
+        global actlmage
+        global outImage
+        auxiliarImg = copy(actlmage)
+        filter = tkvar.get()
+        if filter == 'Invertir color' :
+            showIm = ImageOps.invert(auxiliarImg)
+        elif filter == 'Normal':
+            showIm =copy(actlmage)
+        elif filter == 'Escala de grises':
+            showIm = actlmage.convert("L")
+        elif filter == 'Negativo':
+            #showIm = negativeImage(auxiliarImg)
+            #showIm = rgb2hsvImage(auxiliarImg)
+            showIm = smoke(auxiliarImg)
+        outImage=copy(showIm)
+        refreshImages(showIm,outMiniaturePanel)
+
+
+    #Método que recoge el color especificado en el botón.
+    def getColor():
+        global color
+        color = tkinter.colorchooser.askcolor()
+        colorButton.configure(bg=color[1])
+
+    def aplyColorFilter():
+        global color
+        global actlmage
+        global outImage
+        showImg = copy(actlmage)
+        id = Thread(target=aplyColor,args=(showImg,color,))
+        id.start()
+        id.join()
+        #showImg = aplyColor(showImg,color)
+        outImage=copy(showImg)
+        refreshImages(showImg,outMiniaturePanel)
+
+    #Método que refresca miniaturas.   
+    def refreshImages(newMiniatureImage,panel):
+        newMiniatureImage.thumbnail(size, Image.ANTIALIAS)
+        tkimageout = ImageTk.PhotoImage(newMiniatureImage)			#Mostrar imagen
+        panel.configure(image = tkimageout)
+        panel.image = tkimageout
+            
+root = App()
+root.master.title("pyImageLab")
 tkvar = StringVar(root)
 tkvar.set('Invertir color')
-
-# Método que se utiliza para cargar una imagen al programa.
-def chooseImage():
-    global actlmage
-    filename =tkinter.filedialog.askopenfilename()
-    inImage2 = Image.open(filename)				#Abrir Imagen
-    actlmage = copy(inImage2)
-    refreshImages(inImage2,inMiniaturePanel)
-   
-#Método encargado de guardar la imagen procesada.
-def saveImage():
-    global outImage
-    savefile = tkinter.filedialog.asksaveasfile(mode='w',defaultextension=".jpg")
-    if savefile:    #Comprueba si se le dío a cancelar.
-        outImage.save(savefile)
-
-#Método encargado de aplicar los filtros.
-def aplyFilter():
-    global actlmage
-    global outImage
-    auxiliarImg = copy(actlmage)
-    filter = tkvar.get()
-    if filter == 'Invertir color' :
-        showIm = ImageOps.invert(auxiliarImg)
-    elif filter == 'Normal':
-        showIm =copy(actlmage)
-    elif filter == 'Escala de grises':
-        showIm = actlmage.convert("L")
-    elif filter == 'Negativo':
-        #showIm = negativeImage(auxiliarImg)
-        #showIm = rgb2hsvImage(auxiliarImg)
-        showIm = smoke(auxiliarImg)
-    outImage=copy(showIm)
-    refreshImages(showIm,outMiniaturePanel)
-
-
-#Método que recoge el color especificado en el botón.
-def getColor():
-    global color
-    color = tkinter.colorchooser.askcolor()
-    colorButton.configure(bg=color[1])
-
-def aplyColorFilter():
-    global color
-    global actlmage
-    global outImage
-    showImg = copy(actlmage)
-    id = Thread(target=aplyColor,args=(showImg,color,))
-    id.start()
-    id.join()
-    #showImg = aplyColor(showImg,color)
-    outImage=copy(showImg)
-    refreshImages(showImg,outMiniaturePanel)
-
-#Método que refresca miniaturas.   
-def refreshImages(newMiniatureImage,panel):
-    newMiniatureImage.thumbnail(size, Image.ANTIALIAS)
-    tkimageout = ImageTk.PhotoImage(newMiniatureImage)			#Mostrar imagen
-    panel.configure(image = tkimageout)
-    panel.image = tkimageout
-            
-
-root.geometry(window_size)
+root.master.geometry(window_size)
 window = tkinter.Frame(root)
 window.pack()
 inImage = Image.open("Imagenes/intro.jpg")                      #Abrir Imagen por defecto de la entrada.
